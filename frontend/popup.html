@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>API Access Extension</title>
+  <style>
+    /* Styling for the container holding all links */
+    .links-container {
+      display: inline-block;
+      width: 100%;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Styling for each link item */
+    .link-item {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    /* Styling for individual links (room, time, date, title) */
+    .link-item a {
+      display: block;
+      margin-bottom: 5px;
+      text-decoration: none;
+      color: #333;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .link-item a:hover {
+      color: #007bff;
+    }
+
+    /* Styling for the Fetch API button */
+    .fetch-button {
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    .fetch-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>API Response</h1>
+  <button class="fetch-button" id="fetchLinks">Fetch All Links</button>
+  <button class="fetch-button" id="fetchMeetingsByDate">Fetch Meetings by Date</button>
+  <button class="fetch-button" id="fetchMeetingsByTime">Fetch Meetings by Time</button>
+  <button class="fetch-button" id="fetchMeetingsByDateTime">Fetch Meetings by Date and Time</button>
+  <pre id="api-response"></pre>
+  <script src="popup.js"></script>
+</body>
+
+</html>

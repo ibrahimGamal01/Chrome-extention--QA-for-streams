@@ -5,17 +5,32 @@ const puppeteer = require('puppeteer');
   const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
 
-  // Increase the navigation timeout to a larger value, e.g., 60000 ms (60 seconds)
+  // navigation timeout 90000 ms (900 seconds)
   await page.setDefaultNavigationTimeout(90000);
 
   try {
-    // await page.goto('https://unfccc.int/COP28/schedule?access=All&field_event_has_webcast_value=All&field_start_datetime=2023-12-01&field_end_datetime=2023-12-01&search=&field_event_datetime_value_1=2&start_time=00%3A00%3A00&end_time=23%3A59%3A59');
-    await page.goto('https://unfccc.int/COP28/schedule');
+    await page.goto('https://unfccc.int/COP27/schedule');
 
     // Wait for the content to load
     await page.waitForSelector('.calendar-card');
 
-    // Extract the data
+    // Function to click "Load More" button and wait for 30 seconds
+    const clickAndWaitFor30Seconds = async () => {
+      const loadMoreButton = await page.$('a.button[title="Load more items"]');
+      if (loadMoreButton) {
+        await loadMoreButton.click();
+        await page.waitForTimeout(60000); // Wait for 30 seconds
+      }
+    };
+
+    // Click "Load More" button and wait for 30 seconds
+    // await clickAndWaitFor30Seconds();
+
+    for (let i = 0; i < 5; i++) {
+      await clickAndWaitFor30Seconds();
+    }
+
+    // Extract the data after clicking "Load More"
     const cardData = await page.evaluate(() => {
       const cards = Array.from(document.querySelectorAll('.calendar-card'));
 
@@ -46,8 +61,8 @@ const puppeteer = require('puppeteer');
     });
   } catch (error) {
     console.error('An error occurred:', error);
+  } finally {
+    // Close the browser
+    await browser.close();
   }
-
-  // Close the browser
-  await browser.close();
 })();

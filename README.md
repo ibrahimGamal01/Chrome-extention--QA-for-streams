@@ -75,6 +75,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Your Name - [ibrahimg01897@example.com](mailto:ibrahimg01897@example.com)
+Ibrahim Gamal - [ibrahimg01897@example.com](mailto:ibrahimg01897@example.com)
 
 ---

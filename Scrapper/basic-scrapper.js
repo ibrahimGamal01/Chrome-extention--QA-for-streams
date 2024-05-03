@@ -1,6 +1,21 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
+  // Function to handle retrying
+  const retry = async (fn, retries = 3, delay = 1000) => {
+    try {
+      return await fn();
+    } catch (error) {
+      if (retries > 0) {
+        console.error('An error occurred. Retrying...', error);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        return await retry(fn, retries - 1, delay);
+      } else {
+        throw new Error('Max retries exceeded.');
+      }
+    }
+  };
+
   // Launch Puppeteer and open the webpage
   const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
@@ -9,25 +24,25 @@ const puppeteer = require('puppeteer');
   await page.setDefaultNavigationTimeout(90000);
 
   try {
-    await page.goto('https://unfccc.int/COP27/schedule');
+    await retry(async () => {
+      await page.goto('https://unfccc.int/COP27/schedule');
 
-    // Wait for the content to load
-    await page.waitForSelector('.calendar-card');
+      // Wait for the content to load
+      await page.waitForSelector('.calendar-card');
+    });
 
     // Function to click "Load More" button and wait for 30 seconds
     const clickAndWaitFor30Seconds = async () => {
       const loadMoreButton = await page.$('a.button[title="Load more items"]');
       if (loadMoreButton) {
         await loadMoreButton.click();
-        await page.waitForTimeout(60000); // Wait for 30 seconds
+        await page.waitForTimeout(30000); // Wait for 30 seconds
       }
     };
 
-    // Click "Load More" button and wait for 30 seconds
-    // await clickAndWaitFor30Seconds();
-
+    // Click "Load More" button and wait for 30 seconds multiple times
     for (let i = 0; i < 5; i++) {
-      await clickAndWaitFor30Seconds();
+      await retry(clickAndWaitFor30Seconds);
     }
 
     // Extract the data after clicking "Load More"

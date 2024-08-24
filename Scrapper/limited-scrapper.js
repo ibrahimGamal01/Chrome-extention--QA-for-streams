@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs');
-
+// testt.txt
 (async () => {
   // Function to handle retrying
   const retry = async (fn, retries = 5, delay = 1000) => {
@@ -34,6 +33,7 @@ const fs = require('fs');
 
     let loadMoreVisible = true;
     let clickCount = 0;
+    const maxClicks = 45; // Set the maximum number of clicks
 
     // Function to click "Load More" button and wait
     const clickAndWaitFor30Seconds = async () => {
@@ -52,8 +52,8 @@ const fs = require('fs');
       }
     };
 
-    // Continuously click "Load More" button until it disappears or content is fully loaded
-    while (loadMoreVisible) {
+    // Continuously click "Load More" button until it disappears, content is fully loaded, or max clicks are reached
+    while (loadMoreVisible && clickCount < maxClicks) {
       await retry(clickAndWaitFor30Seconds);
     }
 
@@ -74,22 +74,6 @@ const fs = require('fs');
       });
     });
 
-    // Create a full link and add to JSON array
-    const jsonData = cardData.map(card => {
-      return {
-        title: card.title,
-        link: `https://unfccc.int${card.link}`,
-        date: card.date,
-        time: card.time,
-        room: card.room,
-        access: card.access
-      };
-    });
-
-    // Write the data to a JSON file
-    fs.writeFileSync('meetings.json', JSON.stringify(jsonData, null, 2));
-    console.log('Data saved to meetings.json');
-    
     // Print the extracted data
     cardData.forEach(card => {
       // Create a full link

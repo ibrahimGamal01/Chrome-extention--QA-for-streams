@@ -74,22 +74,6 @@ const fs = require('fs');
       });
     });
 
-    // Create a full link and add to JSON array
-    const jsonData = cardData.map(card => {
-      return {
-        title: card.title,
-        link: `https://unfccc.int${card.link}`,
-        date: card.date,
-        time: card.time,
-        room: card.room,
-        access: card.access
-      };
-    });
-
-    // Write the data to a JSON file
-    fs.writeFileSync('meetings.json', JSON.stringify(jsonData, null, 2));
-    console.log('Data saved to meetings.json');
-    
     // Print the extracted data
     cardData.forEach(card => {
       // Create a full link

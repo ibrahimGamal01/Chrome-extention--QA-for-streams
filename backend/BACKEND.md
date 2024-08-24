@@ -1,115 +1,119 @@
-### Postman Documentation:
+## `api.js`
 
-#### Base URL: `http://localhost:3000/api`
+### Updated `BACKEND.md` Documentation
 
----
+```markdown
+# API Documentation
 
-#### **Retrieve Data Endpoints**
+## Endpoints
 
-##### Get All Links
-- **Endpoint:** `GET /getLinks`
-- **Description:** Retrieves all card data.
-- **Response:** Array of card objects.
+### 1. `GET /meetings`
 
-##### Get Meetings By Date
-- **Endpoint:** `GET /getMeetingsByDate/:date`
-- **Description:** Retrieves meetings based on a specific date.
-- **Parameters:**
-  - `date`: Date in the format specified (e.g., "05 Nov 2022").
-- **Response:** Array of meeting objects filtered by the provided date.
+Retrieve all meetings with optional filtering.
 
-##### Get Meetings By Time
-- **Endpoint:** `GET /getMeetingsByTime/:startTime`
-- http://localhost:3000/api/getMeetingsByDate/05-Nov-2022
-- **Description:** Retrieves meetings based on a start time using regular expression.
-- **Parameters:**
-  - `startTime`: Start time string (e.g., "08:30").
-- **Response:** Array of meeting objects filtered by the provided start time.
+#### Query Parameters:
+- `date`: Filter by date (format: `YYYY-MM-DD`)
+- `time`: Filter by time (format: `HH:mm - HH:mm`)
+- `room`: Filter by room name
 
-##### Get Meetings By Date and Time
-- **Endpoint:** `GET /getMeetingsByDateTime/:date/:startTime`
-- **Description:** Retrieves meetings based on both date and start time using regular expression.
-- **Parameters:**
-  - `date`: Date in the format specified (e.g., "05 Nov 2022").
-  - `startTime`: Start time string (e.g., "08:30").
-- **Response:** Array of meeting objects filtered by the provided date and start time.
-
-##### Get Meetings By Room
-- **Endpoint:** `GET /getMeetingsByRoom/:room`
-- **Description:** Retrieves meetings based on a specific meeting room.
-- **Parameters:**
-  - `room`: Room name or identifier.
-- **Response:** Array of meeting objects filtered by the provided room.
-
-##### Get Limited Documents
-- **Endpoint:** `GET /getLimitedDocuments/:limit`
-- **Description:** Retrieves a limited number of documents with pagination.
-- **Parameters:**
-  - `limit`: Number of documents to retrieve.
-- **Response:** Array of limited documents based on the specified limit.
-
----
-
-#### **Update & Delete Endpoints**
-
-##### Update Meeting
-- **Endpoint:** `PUT /meetings/:id`
-- **Description:** Updates a meeting by its ID.
-- **Parameters:**
-  - `id`: Meeting ID to update.
-- **Request Body:** JSON object containing fields to update (title, link, date, time, room, access).
+#### Example Request:
+```http
+GET /meetings?date=2024-08-23&room=Meeting Room 2
 ```
+
+#### Example Response:
+```json
+[
+  {
+    "title": "Example Meeting",
+    "link": "https://example.com",
+    "date": "2024-08-23",
+    "time": "10:00 - 11:00",
+    "room": "Meeting Room 2",
+    "access": "Open meeting"
+  }
+]
+```
+
+### 2. `GET /meetings/today`
+
+Retrieve all meetings happening today.
+
+#### Example Request:
+```http
+GET /meetings/today
+```
+
+#### Example Response:
+```json
+[
+  {
+    "title": "Example Meeting",
+    "link": "https://asdasd.com",
+    "date": "2024-08-23",
+    "time": "10:00 - 11:00",
+    "room": "Meeting Room 2",
+    "access": "Open meeting"
+  }
+]
+```
+
+### 3. `GET /meetings/upcoming`
+
+Retrieve all upcoming meetings within the next 3 days.
+
+#### Example Request:
+```http
+GET /meetings/upcoming
+```
+
+#### Example Response:
+```json
+[
+  {
+    "title": "Upcoming Meeting",
+    "link": "https://example.com",
+    "date": "2024-08-25",
+    "time": "14:00 - 15:00",
+    "room": "Meeting Room 5",
+    "access": "Limited access"
+  }
+]
+```
+
+### 4. `POST /scrape`
+
+Run the `cop27-scrapper.js` script to scrape and update the meetings data.
+
+#### Example Request:
+```http
+POST /scrape
+```
+
+#### Example Response:
+```json
 {
-  "title": "Updated Title",
-  "link": "http://updated-link.com",
-  "date": "2023-12-15",
-  "time": "09:00",
-  "room": "Updated Room",
-  "access": "Updated Access"
+  "message": "Scraper executed successfully."
 }
 ```
-- **Response:** Updated meeting object or "Meeting not found" error message.
 
-##### Delete Meeting By ID
-- **Endpoint:** `DELETE /meetings/:id`
-- **Description:** Deletes a meeting by its ID.
-- **Parameters:**
-  - `id`: Meeting ID to delete.
-- **Response:** Success message or "Meeting not found" error message.
+## Running the Server
 
-##### Delete All Meetings
-- **Endpoint:** `DELETE /meetings`
-- **Description:** Deletes all meetings.
-- **Response:** Success message or "No meetings found" error message.
+To start the server, run:
 
----
+```bash
+node backend/api.js
+```
 
-#### **Additional Functionalities**
+The server will run on `http://localhost:3000` by default.
+```
 
-##### Sort Documents
-- **Endpoint:** `GET /sortDocuments/:field/:order`
-- **Description:** Sorts documents in ascending or descending order by a specific field.
-- **Parameters:**
-  - `field`: Field name to sort by.
-  - `order`: Sorting order ("asc" for ascending, "desc" for descending).
-- **Response:** Array of sorted documents based on the specified field and order.
+### Explanation:
 
-##### Count All Documents
-- **Endpoint:** `GET /countDocuments`
-- **Description:** Counts all documents in the collection.
-- **Response:** Count of all documents.
+- **/scrape Endpoint**: This new POST endpoint runs the `cop27-scrapper.js` script to update the meetings data. It uses Node.js's `child_process.exec` to execute the script.
 
-##### Count Documents By Room
-- **Endpoint:** `GET /countDocumentsByRoom/:room`
-- **Description:** Counts documents with a specific condition (e.g., meetings with a certain room).
-- **Parameters:**
-  - `room`: Room name or identifier to count documents.
-- **Response:** Count of documents based on the specified room.
+- **GET /meetings/today & GET /meetings/upcoming Endpoints**: These endpoints help the QA team quickly access meetings happening today or in the upcoming 3 days.
 
----
+- **GET /meetings Endpoint**: Extended to support filtering by date, time, and room.
 
-#### **Error Handling**
-- **404 Not Found:** Error message for undefined routes.
-- **500 Internal Server Error:** Global error handling for unexpected errors.
-
----
+This setup should provide the necessary functionality for the QA team and the Chrome extension to interact with the backend effectively.

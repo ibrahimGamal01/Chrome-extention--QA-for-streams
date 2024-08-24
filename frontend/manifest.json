@@ -1,11 +1,14 @@
 {
     "manifest_version": 2,
-    "name": "UN Helper",
+    "name": "COP Meeting Scheduler",
     "version": "1.0",
-    "description": "An extension to access a local API and display the data in the console.",
+    "description": "Chrome Extension to monitor and open COP meetings.",
     "permissions": [
       "http://localhost:3000/"
     ],
+    "background": {
+      "service_worker": "content.js"
+    },
     "content_scripts": [
       {
         "matches": ["<all_urls>"],

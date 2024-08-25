@@ -1,11 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 let meetings = require('./meetings');
 
-
 const app = express();
+app.use(cors());  // Enable CORS for all routes
 app.use(express.json());
 
 // GET /meetings: Retrieve all meetings, with optional filtering by date, time, and room

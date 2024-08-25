@@ -1,62 +1,5 @@
-// meetings.js
 const meetings = [
   {
-    title: "Pre-sessional workshop on the Work Programme",
-    link: "https://unfccc.int/event/pre-sessional-workshop",
-    date: "05 Nov 2022",
-    time: "08:30 - 18:00",
-    room: "Meeting Room 2",
-    access: "Limited access",
-  },
-  {
-    title: "4th workshop under the Glasgow–Sharm el-Sheikh work programme",
-    link: "https://unfccc.int/event/4th-workshop",
-    date: "05 Nov 2022",
-    time: "09:00 - 18:00",
-    room: "Meeting Room 16",
-    access: "Open meeting",
-  },
-  {
-    "title": "Example Meeting",
-    "link": "https://example.com",
-    "date": "2024-08-23",
-    "time": "10:00 - 11:00",
-    "room": "Meeting Room 2",
-    "access": "Open meeting"
-  },
-  {
-    "title": "Example Meeting",
-    "link": "https://asdasd.com",
-    "date": "2024-08-23",
-    "time": "10:00 - 11:00",
-    "room": "Meeting Room 2",
-    "access": "Open meeting"
-  },
-  {
-    "title": "Example Meeting",
-    "link": "https:asdasdxample.com",
-    "date": "2024-08-24",
-    "time": "10:00 - 11:00",
-    "room": "Meeting Room 2",
-    "access": "Open meeting"
-  },
-  {
-    "title": "Example Meeting",
-    "link": "https://asdasd.com",
-    "date": "2024-08-24",
-    "time": "10:00 - 11:00",
-    "room": "Meeting Room 2",
-    "access": "Open meeting"
-  },
-  {
-    "title": "Upcoming Meeting",
-    "link": "https://example.com",
-    "date": "2024-08-25",
-    "time": "14:00 - 15:00",
-    "room": "Meeting Room 5",
-    "access": "Limited access"
-  },
-    {
     title:
       "Pre-sessional workshop on the Work Programme for urgently scaling up Mitigation ambition and implementation referred to in paragraph 27 of decision 1/CMA.3 (MWP)",
     link: "https://unfccc.int/event/pre-sessional-workshop-on-the-work-programme-for-urgently-scaling-up-mitigation-ambition-and-0",
@@ -1327,7 +1270,6 @@ const meetings = [
     time: "13:00 - 14:30",
     room: "Side Event Room 3 - Hatshepsut",
     access: "Open meeting",
-  }
+  },
 ];
-
 module.exports = meetings;

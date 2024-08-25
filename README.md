@@ -1,80 +1,165 @@
+# COP Meeting Scheduler
 
-# Event Stream QA/QC Automation Tool
+## Table of Contents
+- [COP Meeting Scheduler](#cop-meeting-scheduler)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Project Structure](#project-structure)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [API Endpoints](#api-endpoints)
+  - [Component Breakdown](#component-breakdown)
+    - [MeetingsPage](#meetingspage)
+    - [FilterSection](#filtersection)
+  - [Styling](#styling)
+  - [Future Enhancements](#future-enhancements)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-This project is designed to simplify the QA/QC process for live streams at large-scale events. Given that events can have over 20 streams happening simultaneously, manually monitoring each one for audio and video quality can be overwhelming. This tool automates the process of opening each stream on time, allowing you to efficiently test and monitor multiple streams without missing a beat. Whether you're handling event logistics or ensuring broadcast quality, this automation tool helps ensure that every stream meets your quality standards right when it goes live.
+## Introduction
 
-## Prerequisites
+The COP Meeting Scheduler is a web application designed to help users manage and filter meetings for the Conference of the Parties (COP) events. It provides an intuitive interface for viewing meeting details and applying various filters to find specific meetings quickly.
 
-Before you begin, ensure you have:
-- Node.js installed
-- Google Chrome 
+## Features
 
-## Setup
+- View a list of COP meetings with details such as title, date, time, and room
+- Filter meetings by:
+  - Date
+  - Start time
+  - End time
+  - Room
+- Apply multiple filters simultaneously
+- View today's meetings with a single click
+- Responsive design for desktop and mobile devices
 
-Clone this repository locally:
+## Technologies Used
 
-```bash
-git clone https://github.com/ibrahimGamal01/Chrome-extention--QA-for-streams
-cd Chrome-extention--QA-for-streams
+- Frontend:
+  - React.js
+  - CSS3 with CSS Modules
+- Backend:
+  - Node.js
+  - Express.js
+- Database:
+  - JSON file (for simplicity, can be replaced with a proper database)
+
+## Project Structure
+
+```
+cop-meeting-scheduler/
+│
+├── backend/
+│   ├── server.js
+│   └── meetings.json
+│
+├── frontend/
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── FilterSection.js
+│   │   │   └── MeetingsPage.js
+│   │   ├── styles/
+│   │   │   ├── FilterSection.css
+│   │   │   └── MeetingsPage.css
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+│
+└── README.md
 ```
 
-### Backend Setup
+## Installation
 
-Navigate to the backend directory and install dependencies:
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/cop-meeting-scheduler.git
+   cd cop-meeting-scheduler
+   ```
 
-```bash
-cd backend
-npm install
-```
+2. Install backend dependencies:
+   ```
+   cd backend
+   npm install
+   ```
 
-To run the backend server, use:
+3. Install frontend dependencies:
+   ```
+   cd ../frontend
+   npm install
+   ```
 
-```bash
-node api.js
-```
+## Usage
 
-For more detailed information about the backend setup, see [BACKEND.md](backend/BACKEND.md).
+1. Start the backend server:
+   ```
+   cd backend
+   node server.js
+   ```
+   The server will run on `http://localhost:3000`.
 
-### Frontend (Chrome Extension) Setup
+2. Start the frontend development server:
+   ```
+   cd frontend
+   npm start
+   ```
+   The application will be available at `http://localhost:3001`.
 
-1. **Load the extension into Chrome:**
-   - Open Google Chrome.
-   - Navigate to `chrome://extensions/`.
-   - Enable Developer Mode (toggle switch at the top-right).
-   - Click on "Load unpacked" and select the `frontend` directory from your project folder.
+3. Open your browser and navigate to `http://localhost:3001` to use the application.
 
-2. **Using the Extension:**
-   - Click on the extension icon in the Chrome toolbar.
-   - The popup interface should allow interaction with the backend services.
+## API Endpoints
 
-### Scraper Setup
+The backend provides the following API endpoint:
 
-Navigate to the Scrapper directory, install dependencies, and run the script:
+- `GET /meetings`: Returns a list of all meetings
 
-```bash
-cd ../Scrapper
-npm install
-node basic-scrapper.js
-```
-### `basic-scrapper.js`
+## Component Breakdown
 
-This script will illustrate the process of scrapping the streams to be stored/ used later. Used NodeJS `puppeteer` to retrieve the streams.
+### MeetingsPage
 
+The main component that renders the entire page, including the header, filter section, and meeting cards.
 
+Props: None
 
-## Troubleshooting
+State:
+- `filteredMeetings`: Array of meetings after applying filters
+- `activeFilters`: Object containing current active filters
 
-Common issues:
-- Make sure all dependencies are installed. Check the `package.json` in each directory for any additional dependencies.
-- Verify that Chrome is up to date for compatibility with the extension APIs.
+### FilterSection
 
+Handles the rendering and logic for all filter inputs.
+
+Props:
+- `onFilterChange`: Function to update filtered meetings in the parent component
+
+State:
+- `activeFilters`: Object containing current active filters
+- `meetings`: Array of all meetings
+- `uniqueOptions`: Object containing unique options for each filter type
+
+## Styling
+
+The project uses CSS Modules for styling. The main style files are:
+
+- `MeetingsPage.css`: Styles for the overall page layout and meeting cards
+- `FilterSection.css`: Styles for the filter inputs and active filter tags
+
+The design uses a modern, clean aesthetic with a responsive layout that adapts to different screen sizes.
+
+## Future Enhancements
+
+1. Implement user authentication and personalized meeting schedules
+2. Add a calendar view for better visualization of meeting timelines
+3. Integrate with a backend database for real-time updates
+4. Implement search functionality for meeting titles and descriptions
+5. Add the ability to export filtered meetings to various formats (e.g., PDF, CSV)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-
-Ibrahim Gamal - [ibrahimg01897@example.com](mailto:ibrahimg01897@example.com)
-
----
+This project is licensed under the MIT License.
